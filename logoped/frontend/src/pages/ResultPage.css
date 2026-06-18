@@ -1,0 +1,24 @@
+.result-page {
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.result-page__shell {
+  width: min(100%, 520px);
+  display: grid;
+  gap: 16px;
+  color: #ffffff;
+}
+
+.result-page__eyebrow {
+  color: #67e8f9;
+  font-size: 13px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.result-page__shell h1 {
+  font-size: 38px;
+  line-height: 1;
+}

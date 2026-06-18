@@ -1,0 +1,128 @@
+.feed-page,
+.test-page,
+.result-page {
+  min-height: 100svh;
+  background:
+    radial-gradient(circle at 14% 12%, rgba(34, 211, 238, 0.18), transparent 20rem),
+    radial-gradient(circle at 86% 20%, rgba(251, 113, 133, 0.14), transparent 18rem),
+    #09090b;
+}
+
+.feed-page {
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.feed-page__shell {
+  width: min(100%, 500px);
+  min-height: calc(100svh - 36px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-items: center;
+  gap: 14px;
+}
+
+.feed-page__topbar {
+  width: min(100%, 460px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: #ffffff;
+}
+
+.feed-page__eyebrow {
+  color: #67e8f9;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.feed-page__topbar h1 {
+  margin-top: 3px;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.feed-page__counter {
+  min-width: 64px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-weight: 950;
+  text-align: center;
+}
+
+.feed-page__swipe-area {
+  position: relative;
+  width: min(100%, 460px);
+  touch-action: none;
+  user-select: none;
+  transition: transform 160ms ease;
+}
+
+.feed-page__swipe-area--active {
+  transform: scale(0.985);
+}
+
+.feed-page__swipe-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 84px;
+  z-index: 2;
+  width: max-content;
+  max-width: calc(100% - 48px);
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(9, 9, 11, 0.5);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 12px;
+  font-weight: 850;
+  text-align: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.feed-page__controls {
+  width: min(100%, 460px);
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 12px;
+}
+
+.feed-page__controls button {
+  min-height: 54px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 950;
+}
+
+.feed-page__controls button:last-child {
+  background: #bef264;
+  color: #111113;
+}
+
+.feed-page__controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+@media (max-width: 520px) {
+  .feed-page {
+    padding: 12px;
+  }
+
+  .feed-page__shell {
+    min-height: calc(100svh - 24px);
+  }
+
+  .feed-page__swipe-hint {
+    bottom: 76px;
+  }
+}
