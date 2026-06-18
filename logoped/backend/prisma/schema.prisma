@@ -36,3 +36,20 @@ model Profile {
   @@index([childId])
   @@map("profiles")
 }
+
+model ExerciseCard {
+  id           Int      @id @default(autoincrement())
+  character    String
+  trend        String
+  phrase       String
+  voiceType    String   @map("voice_type")
+  voiceEmotion String   @map("voice_emotion")
+  image        String
+  color        String
+  difficulty   Int
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@index([difficulty])
+  @@map("cards")
+}
