@@ -1,4 +1,8 @@
 import { isSupabaseConfigured, supabase } from '../lib/supabase'
+import {
+  loginBackendUser,
+  registerBackendUser,
+} from '../features/auth/api/backendAuth'
 
 export type AuthResult = {
   ok: boolean
@@ -20,6 +24,12 @@ export async function signIn(email: string, password: string): Promise<AuthResul
 
   if (error) {
     return { ok: false, error: error.message }
+  }
+
+  try {
+    await loginBackendUser(email, password)
+  } catch {
+    return { ok: false, error: 'Backend auth is not available right now' }
   }
 
   return { ok: true }
@@ -49,6 +59,12 @@ export async function signUp(
 
   if (error) {
     return { ok: false, error: error.message }
+  }
+
+  try {
+    await registerBackendUser(email, password, username)
+  } catch {
+    return { ok: false, error: 'Backend auth is not available right now' }
   }
 
   return { ok: true }

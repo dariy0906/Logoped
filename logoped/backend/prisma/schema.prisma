@@ -1,40 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-}
-
-enum UserRole {
-  child
-  parent
-
-  @@map("user_role")
-}
-
-model Profile {
-  id           String   @id @default(uuid())
-  username     String
-  email        String   @unique
-  passwordHash String   @map("password_hash")
-  passwordSalt String   @map("password_salt")
-  role         UserRole?
-  level        Int      @default(1)
-  xp           Int      @default(0)
-  createdAt    DateTime @default(now()) @map("created_at")
-  parentId     String?  @map("parent_id")
-  childId      String?  @map("child_id")
-
-  @@index([role])
-  @@index([parentId])
-  @@index([childId])
-  @@map("profiles")
 }
 
 model ExerciseCard {
@@ -42,14 +12,26 @@ model ExerciseCard {
   character    String
   trend        String
   phrase       String
-  voiceType    String   @map("voice_type")
-  voiceEmotion String   @map("voice_emotion")
+  voiceType    String
+  voiceEmotion String
   image        String
   color        String
   difficulty   Int
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
 
-  @@index([difficulty])
-  @@map("cards")
+model Profile {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  role      UserRole
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  child
+  parent
 }

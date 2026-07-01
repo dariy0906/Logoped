@@ -48,7 +48,11 @@ export function RoleSelectionPage({ onSelectRole }: RoleSelectionPageProps) {
               key={item.role}
               className="grid min-h-36 gap-3 rounded-[2rem] border border-white/10 bg-white/8 p-6 text-left shadow-xl shadow-black/20 backdrop-blur-xl transition hover:-translate-y-1 hover:border-cyan-200/35 hover:bg-white/12 active:translate-y-0"
               type="button"
-              onClick={() => onSelectRole(item.role)}
+              onClick={() => {
+                void onSelectRole(item.role).catch((error) => {
+                  console.error('Failed to select role:', error)
+                })
+              }}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.06, duration: 0.22, ease: 'easeOut' }}

@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { clearBackendAccessToken, updateBackendUserRole } from '../api/backendAuth'
 import { isSupabaseConfigured, supabase } from '../../../lib/supabase'
 import {
   ensureUserProfile,
@@ -113,6 +114,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return
     }
 
+    try {
+      await updateBackendUserRole(role)
+    } catch (error) {
+      console.warn('Could not update backend role:', error)
+      throw error
+    }
+
     const nextProfile = await updateUserRole(user, role)
     setProfile(nextProfile)
 
@@ -140,6 +148,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (isSupabaseConfigured && supabase) {
       await supabase.auth.signOut()
     }
+
+    clearBackendAccessToken()
 
     setUser(null)
     setProfile(null)

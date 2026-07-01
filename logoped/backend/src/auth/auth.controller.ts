@@ -1,29 +1,29 @@
-import { Body, Controller, Delete, Get, Headers, Post } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
+import { RegisterAuthDto } from './dto/register-auth.dto';
+import { LoginAuthDto } from './dto/login-auth.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  register(@Body() body: RegisterDto) {
-    return this.authService.register(body);
+  register(@Body() registerAuthDto: RegisterAuthDto) {
+    return this.authService.register(registerAuthDto);
   }
 
   @Post('login')
-  login(@Body() body: LoginDto) {
-    return this.authService.login(body);
+  login(@Body() loginAuthDto: LoginAuthDto) {
+    return this.authService.login(loginAuthDto);
   }
-
+  
   @Get('me')
-  me(@Headers('authorization') authorization?: string) {
-    return this.authService.me(authorization);
+  me() {
+    return this.authService.me();
   }
 
-  @Delete('me')
-  deleteMe(@Headers('authorization') authorization?: string) {
-    return this.authService.deleteMe(authorization);
+  @Delete('delete')
+  delete() {
+    return this.authService.delete();
   }
 }

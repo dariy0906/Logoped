@@ -1,4 +1,5 @@
 import type { FeedItem } from '../model/types'
+import { getBackendAccessToken } from '../../auth/api/backendAuth'
 
 type FeedCardResponse = {
   id?: unknown
@@ -42,8 +43,15 @@ function normalizeFeedCard(card: FeedCardResponse): FeedItem {
 }
 
 export async function fetchFeedCards(signal?: AbortSignal): Promise<FeedItem[]> {
+  const accessToken = getBackendAccessToken()
+
   const response = await fetch(`${getApiUrl()}/cards`, {
     signal,
+    headers: accessToken
+      ? {
+          authorization: `Bearer ${accessToken}`,
+        }
+      : undefined,
   })
 
   if (!response.ok) {
