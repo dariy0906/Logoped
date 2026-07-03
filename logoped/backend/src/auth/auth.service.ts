@@ -6,16 +6,18 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
-  constructor( private readonly prisma: PrismaService ){}
-  
+  constructor(private readonly prisma: PrismaService) {}
+
   async register(registerAuthDto: RegisterAuthDto) {
     const { email, password, name, role = UserRole.child } = registerAuthDto;
     const existingUser = await this.prisma.profile.findUnique({
-      where: { email }
-    })
+      where: { email },
+    });
+
     if (existingUser) {
-      throw new ConflictException('User already exists')
+      throw new ConflictException('User already exists');
     }
+
     const createdUser = await this.prisma.profile.create({
       data: {
         email,
@@ -24,19 +26,35 @@ export class AuthService {
         role,
       },
     });
-    const { password: _, ...userWithoutPassword } = createdUser
+
+    const { password: _, ...userWithoutPassword } = createdUser;
     return userWithoutPassword;
   }
 
-  login(loginAuthDto: LoginAuthDto) {
-    return `This action check email&password user`;
+  async login(loginAuthDto: LoginAuthDto) {
+    const { email, password } = loginAuthDto;
+
+    const user = await this.prisma.profile.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new ConflictException('User not found');
+    }
+
+    if (user.password !== password) {
+      throw new ConflictException('Invalid password');
+    }
+
+    const { password: _, ...userWithoutPassword } = user;
+    return userWithoutPassword;
   }
 
   me() {
-    return `this action return this user from JWT`;
+    return 'Auth is simple for now, use login result on the client';
   }
 
   delete() {
-    return `This action delete user`;
+    return 'Delete is not wired yet in the simple auth flow';
   }
 }

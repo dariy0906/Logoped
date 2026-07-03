@@ -1,8 +1,8 @@
 type BackendAuthResponse = {
-  accessToken: string
+  accessToken?: string
   profile: {
     id: string
-    username: string
+    name: string
     email: string
     role: 'child' | 'parent' | null
   }
@@ -60,14 +60,22 @@ async function patchJson<T>(path: string, body: unknown, token?: string): Promis
   return response.json() as Promise<T>
 }
 
-export async function registerBackendUser(email: string, password: string, username: string) {
+export async function registerBackendUser(
+  email: string,
+  password: string,
+  username: string,
+  role: 'child' | 'parent' = 'child',
+) {
   const data = await postJson<BackendAuthResponse>('/auth/register', {
     email,
     password,
-    username,
+    name: username,
+    role,
   })
 
-  saveBackendAccessToken(data.accessToken)
+  if (data.accessToken) {
+    saveBackendAccessToken(data.accessToken)
+  }
   return data
 }
 
@@ -77,7 +85,9 @@ export async function loginBackendUser(email: string, password: string) {
     password,
   })
 
-  saveBackendAccessToken(data.accessToken)
+  if (data.accessToken) {
+    saveBackendAccessToken(data.accessToken)
+  }
   return data
 }
 
@@ -90,4 +100,3 @@ export async function updateBackendUserRole(role: 'child' | 'parent') {
 
   return patchJson<BackendAuthResponse['profile']>('/auth/role', { role }, token)
 }
-

@@ -7,6 +7,8 @@ type RegisterFormProps = {
   onSuccess?: () => void
 }
 
+type RegisterRole = 'child' | 'parent'
+
 type RegisterErrors = {
   username?: string
   email?: string
@@ -24,6 +26,7 @@ export function RegisterForm({ onLoginClick, onSuccess }: RegisterFormProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [role, setRole] = useState<RegisterRole>('child')
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState<RegisterErrors>({})
@@ -58,7 +61,7 @@ export function RegisterForm({ onLoginClick, onSuccess }: RegisterFormProps) {
     setLoading(true)
 
     try {
-      const result = await signUp(email, password, username.trim())
+      const result = await signUp(email, password, username.trim(), role)
 
       if (!result.ok) {
         setErrors({ form: result.error ?? 'Не удалось создать аккаунт' })
@@ -110,6 +113,37 @@ export function RegisterForm({ onLoginClick, onSuccess }: RegisterFormProps) {
         />
         {errors.username ? <span className="text-xs text-red-200">{errors.username}</span> : null}
       </label>
+
+      <div className="grid gap-2 text-sm font-bold text-white/70">
+        Роль
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            className={`h-12 rounded-2xl border px-4 text-sm font-black transition ${
+              role === 'child'
+                ? 'border-cyan-300/55 bg-cyan-300 text-zinc-950'
+                : 'border-white/10 bg-white/8 text-white/70 hover:bg-white/12 hover:text-white'
+            }`}
+            type="button"
+            onClick={() => setRole('child')}
+          >
+            Ребенок
+          </button>
+          <button
+            className={`h-12 rounded-2xl border px-4 text-sm font-black transition ${
+              role === 'parent'
+                ? 'border-cyan-300/55 bg-cyan-300 text-zinc-950'
+                : 'border-white/10 bg-white/8 text-white/70 hover:bg-white/12 hover:text-white'
+            }`}
+            type="button"
+            onClick={() => setRole('parent')}
+          >
+            Родитель
+          </button>
+        </div>
+        <p className="text-xs font-semibold text-white/40">
+          По умолчанию выбирается ребенок.
+        </p>
+      </div>
 
       <label className="grid gap-2 text-sm font-bold text-white/70">
         Email

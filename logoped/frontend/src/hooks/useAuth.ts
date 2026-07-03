@@ -39,6 +39,7 @@ export async function signUp(
   email: string,
   password: string,
   username: string,
+  role: 'child' | 'parent' = 'child',
 ): Promise<AuthResult> {
   if (!isSupabaseConfigured || !supabase) {
     return {
@@ -53,6 +54,7 @@ export async function signUp(
     options: {
       data: {
         username,
+        role,
       },
     },
   })
@@ -62,7 +64,7 @@ export async function signUp(
   }
 
   try {
-    await registerBackendUser(email, password, username)
+    await registerBackendUser(email, password, username, role)
   } catch {
     return { ok: false, error: 'Backend auth is not available right now' }
   }

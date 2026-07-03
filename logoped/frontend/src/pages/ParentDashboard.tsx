@@ -32,25 +32,14 @@ export function ParentDashboard() {
             <span className="text-5xl" aria-hidden="true">
               👨
             </span>
-            <h2 className="text-3xl font-black leading-tight">
-              Функции родительского контроля скоро появятся
-            </h2>
+            <h2 className="text-3xl font-black leading-tight">Панель родителя пока пустая</h2>
             <p className="max-w-xl text-base font-semibold text-white/55">
-              Архитектура уже подготовлена для связки parent_id и child_id. Позже здесь появятся
-              прогресс ребенка, история тренировок и рекомендации.
+              Здесь позже появятся инструменты контроля и связи с детским аккаунтом.
             </p>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-3">
-            {['Прогресс ребенка', 'История AI оценок', 'Связка аккаунтов'].map((item) => (
-              <div
-                key={item}
-                className="min-h-28 rounded-3xl border border-white/8 bg-zinc-950/45 p-4"
-              >
-                <p className="text-sm font-black text-white">{item}</p>
-                <p className="mt-2 text-xs font-bold text-white/40">Скоро</p>
-              </div>
-            ))}
+          <div className="min-h-32 rounded-3xl border border-dashed border-white/10 bg-zinc-950/35 p-5 text-sm font-semibold text-white/40">
+            Пока здесь ничего нет.
           </div>
         </motion.section>
       </div>
