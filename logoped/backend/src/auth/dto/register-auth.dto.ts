@@ -1,4 +1,4 @@
-import { UserRole } from 'generated/prisma/enums';
+import { UserRole } from '@prisma/client';
 import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class RegisterAuthDto {
