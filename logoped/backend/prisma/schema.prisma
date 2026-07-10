@@ -9,7 +9,6 @@ datasource db {
 model ExerciseCard {
   id           Int      @id @default(autoincrement())
   character    String
-  trend        String
   phrase       String
   voiceType    String
   voiceEmotion String
@@ -33,4 +32,16 @@ model Profile {
 enum UserRole {
   child
   parent
+}
+
+enum VoiceType {
+  male
+  female
+}
+enum VoiceEmotion {
+  NEUTRAL
+  CHEERFUL
+  FRIENDLY
+  CALM
+  ENCOURAGING
 }
